@@ -1,0 +1,22 @@
+#Goated model that just puts different models in sequence. n_estimators - the numeber of models tried, learning_rate - smaller number means each model will help us less, n_jobs - parallelism
+# early_stopping_rounds - how many models should get higher MAE for the process to stop.
+
+
+from xgboost import XGBRegressor
+# Define the model
+my_model_2 = XGBRegressor(n_estimators = 1000, learning_rate = 0.05) # Your code here
+
+# Fit the model
+my_model_2.fit(X_train, y_train,
+              early_stopping_rounds = 10,
+              eval_set = [(X_valid, y_valid)],
+              verbose = False) # Your code here
+
+# Get predictions
+predictions_2 = my_model_2.predict(X_valid) # Your code here
+
+# Calculate MAE
+mae_2 = mean_absolute_error(y_valid, predictions_2) # Your code here
+
+# Uncomment to print MAE
+print("Mean Absolute Error:" , mae_2)
