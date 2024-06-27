@@ -102,3 +102,65 @@ OH_X_valid = pd.concat([num_X_valid, OH_cols_valid], axis=1) # Your code here
 # Make sure that every feature is in string form
 OH_X_train.columns = OH_X_train.columns.astype(str)
 OH_X_valid.columns = OH_X_valid.columns.astype(str)
+
+
+
+# One-hot encode Categorical feature, adding a column prefix "Cat"
+X_new = pd.get_dummies(df.Categorical, prefix="Cat")
+
+
+
+
+#EXAMPLES OF CLEANING UP DATA
+
+customer["AverageIncome"] = (
+    customer.groupby("State")  # for each state
+    ["Income"]                 # select the income
+    .transform("mean")         # and compute its mean
+)
+
+customer[["State", "Income", "AverageIncome"]].head(10) 
+
+
+customer[["Type", "Level"]] = (  # Create two new features
+    customer["Policy"]           # from the Policy feature
+    .str                         # through the string accessor
+    .split(" ", expand=True)     # by splitting on " "
+                                 # and expanding the result into separate columns
+)
+
+customer[["Policy", "Type", "Level"]].head(10)
+
+
+components = [ "Cement", "BlastFurnaceSlag", "FlyAsh", "Water",
+               "Superplasticizer", "CoarseAggregate", "FineAggregate"]
+concrete["Components"] = concrete[components].gt(0).sum(axis=1)
+
+concrete[components + ["Components"]].head(10)
+#Sum up components
+
+
+# Use as many ratios, as they are hard for models to learn
+
+
+
+
+
+
+
+
+
+#CLUSTERING
+
+from sklearn.cluster import KMeans
+
+X_po = X[features_to_be_used_in_clustering]
+
+kmeans = KMeans(n_clusters=6)
+X["Cluster"] = kmeans.fit_predict(X_po)
+X["Cluster"] = X["Cluster"].astype("category")
+
+
+#Dates
+# create a new column, date_parsed, with the parsed dates
+landslides['date_parsed'] = pd.to_datetime(landslides['date'], format="%m/%d/%y")

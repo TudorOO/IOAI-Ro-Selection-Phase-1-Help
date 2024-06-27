@@ -20,3 +20,6 @@ mae_2 = mean_absolute_error(y_valid, predictions_2) # Your code here
 
 # Uncomment to print MAE
 print("Mean Absolute Error:" , mae_2)
+
+
+#REMEMBER GRIDSEARCH
